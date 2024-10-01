@@ -1,41 +1,24 @@
-import json
-from flask import Blueprint, jsonify, request
-from bson.json_util import dumps
 from datetime import datetime
-from ..mongo.pymongoServer import startCollection
+from ..db.sales import get_sales
 
-collectionName = 'lizCafeteria'
-
-get_sales_bp = Blueprint('get_sales', __name__)
-@get_sales_bp.route('/getSales', methods=['GET'])
-def get_sales():
-  collection = startCollection(collectionName)
-  dayCollection = collection['day']
-  productCollection = collection['product']
-  salesCollection = collection['sale']
-
-  requestData = json.loads(request.args.to_dict()['query'])
-
-  query = {
-    'date': {
-      '$gte': datetime.strptime(requestData['startTime'], '%Y-%m-%dT%H:%M:%S.%fZ'),
-      '$lte': datetime.strptime(requestData['endTime'], '%Y-%m-%dT%H:%M:%S.%fZ'),
-    },
-  }
-  
-  if 'products' in requestData:
-    query['product'] = {'$in': requestData['products']}
-
-  if 'categories' in requestData:
-    query['category'] = {'$in': requestData['categories']}
+def handle_get_sales(request):
+    user_name = request.user_name
+    query = {
+        'date': {
+            '$gte': datetime.strptime(request['startTime'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+            '$lte': datetime.strptime(request['endTime'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+        },
+    }
     
-  print(requestData)
-  list_of_sales = list(salesCollection.find(query))
-  for sale in list_of_sales:
-    if '_id' in sale:
-      sale['_id'] = str(sale['_id'])
-  
-  print("MongoDB server is connected.")
-  print(len(list_of_sales))
-  print("MongoDB server is connected.")
-  return jsonify(list_of_sales)
+    if 'products' in request:
+        query['product'] = {'$in': request['products']}
+
+    if 'categories' in request:
+        query['category'] = {'$in': request['categories']}
+
+    list_of_sales = get_sales(user_name, query)
+    for sale in list_of_sales:
+        if '_id' in sale:
+            sale['_id'] = str(sale['_id'])
+
+    return list_of_sales

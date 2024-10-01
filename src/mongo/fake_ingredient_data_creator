@@ -1,0 +1,123 @@
+ingredients_data = [
+  {
+    'name': 'milk',
+    'he': 'חלב',
+    'cost': 5.8,
+    'costOf': '1 ליטר',
+    'otherCosts': 0,
+    'failurePercentage': 0,
+    'uses': [
+      {
+        'equipment': 'refrigerator',
+        'timePercentage': 100,
+        'areaPercentage': 20,
+      },
+    ],
+  },
+  {
+    'name': 'offeeBeans',
+    'he': 'פולי קפה',
+    'cost': 40,
+    'costOf': '1 קילו',
+    'otherCosts': 0,
+    'failurePercentage': 0,
+    'uses': [
+      {
+        'equipment': 'warehouse',
+        'timePercentage': 100,
+        'areaPercentage': 1,
+      },
+    ],
+  },
+  {
+    'name': 'iceCream',
+    'he': 'גלידה',
+    'cost': 80,
+    'costOf': '4 ליטר',
+    'otherCosts': 0,
+    'failurePercentage': 5,
+    'uses': [
+      {
+        'equipment': 'frontFreezer',
+        'timePercentage': 100,
+        'areaPercentage': 8,
+      },
+      {
+        'equipment': 'backFreezer',
+        'timePercentage': 100,
+        'areaPercentage': 5,
+      },
+    ],
+  },
+  {
+    'name': 'can',
+    'he': 'פחית',
+    'cost': 2,
+    'costOf': 'פחית 1',
+    'otherCosts': 0,
+    'failurePercentage': 0,
+    'uses': [
+      {
+        'equipment': 'refrigerator',
+        'timePercentage': 100,
+        'areaPercentage': 10,
+      },
+    ],
+  },
+  {
+    'name': 'heineken',
+    'he': 'היניקן',
+    'cost': 250,
+    'costOf': 'חבית 50 ליטר',
+    'otherCosts': 0,
+    'failurePercentage': 2,
+    'uses': [
+      {
+        'equipment': 'warehouse',
+        'timePercentage': 100,
+        'areaPercentage': 5,
+      },
+    ],
+  },
+  {
+    'name': 'carlsberg',
+    'he': 'קרלסברג',
+    'cost': 260,
+    'costOf': 'חבית 50 ליטר',
+    'otherCosts': 0,
+    'failurePercentage': 2,
+    'uses': [
+      {
+        'equipment': 'warehouse',
+        'timePercentage': 100,
+        'areaPercentage': 5,
+      },
+    ],
+  },
+  {
+    'name': 'corona',
+    'he': 'קורונה',
+    'cost': 300,
+    'costOf': 'חבית 60 ליטר',
+    'otherCosts': 0,
+    'failurePercentage': 2,
+    'uses': [
+      {
+        'equipment': 'warehouse',
+        'timePercentage': 100,
+        'areaPercentage': 6,
+      },
+    ],
+  },
+]
+
+def create_ingredients_array():
+    ingredients_array = []
+
+    for ingredient in ingredients_data:
+        ingredients_array.append({
+            **ingredient,
+            '_id': ingredient['name'] + '_' + ingredient['cost'],
+        })
+
+    return ingredients_array
