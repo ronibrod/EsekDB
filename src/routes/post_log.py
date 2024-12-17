@@ -48,7 +48,7 @@ def handle_post_login(request):
         if not bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password):
             return {"error": "Invalid username or password"}, 401
         
-        return {'user_data': { '_id': user_data['_id'] }}, 200
+        return {'user_data': { '_id': user_data['_id'], 'typicalName': user_data['typicalName'] }}, 200
     
     except Exception as e:
         return {"error": str(e)}, 500

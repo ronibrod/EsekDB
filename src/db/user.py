@@ -9,7 +9,8 @@ def create_user(query):
 def get_user(query, projection={}):
     userCollection = get_collection('users', 'user')
     
-    return dict(userCollection.find_one(query, projection))
+    user_data = dict(userCollection.find_one(query, projection))
+    return user_data
 
 def update_user(query, update_query):
     userCollection = get_collection('users', 'user')
